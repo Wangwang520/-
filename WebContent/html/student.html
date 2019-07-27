@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>学生信息</title>
+
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
+
+
+
+
+
+
+</head>
+
+
+<body style="background-color: gainsboro;">
+	<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+	<ul class="nav nav-tabs">
+		<li role="presentation" id="l1"><a href="course.html"> <img
+				src="../img/log.png" width="30px" height="30px" /> &nbsp;&nbsp;
+				课表信息
+		</a></li>
+		<li role="presentation" class="active"><a href="student.html"><img
+				src="../img/colleage cap.png" width="30px" height="30px" />&nbsp;&nbsp;学生信息</a></li>
+		<li role="presentation"><a href="insertstudent.html"><img
+				src="../img/dictation.png" width="30px" height="30px" />&nbsp;&nbsp;学生信息录入</a></li>
+		<li role="presentation"><a href="Insertcourse.html"><img
+				src="../img/calender.png" width="30px" height="30px" />&nbsp;&nbsp;添加选修课</a></li>
+		<button type="button" id="b2" title="退出登录" class="btn btn-group"
+			onclick="out()">
+			<span><img src="../img/p.png" width="30px" height="30px" /></span>
+		</button>
+	</ul>
+
+	<div class="container-fluid ">
+		<table class="table table-hover" id="t1">
+			<tr>
+				<td><span><img src="../img/s.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;学&nbsp;&nbsp;号</td>
+				<td><span><img src="../img/r.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;姓&nbsp;&nbsp;名</td>
+				<td><span><img src="../img/q.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;性&nbsp;&nbsp;别</td>
+				<td><span><img src="../img/k.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;出生日期</td>
+				<td><span><img src="../img/j.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;密&nbsp;&nbsp;码</td>
+			</tr>
+		</table>
+	</div>
+
+	<script>
+				
+				
+				$.post("/gomiProject/studentServlet", function(data) {
+				var json = eval("(" + data + ")");
+				for(var i = 0; i < json.length; i++) {
+
+					$("#t1").append("<tr><td>" +
+						json[i].sid + "</td><td>" +
+						json[i].sname + "</td><td>" +
+						json[i].sgender + "</td><td>" +
+						json[i].sage +"</td><td>"+
+						json[i].spassword + "</td></tr>");
+				}
+
+				});
+				
+			function out()  {
+  var r=confirm("请问您是否确定退出登录？")
+  if (r==true)
+    {
+  window.location.href = "../login.html";
+    }
+  else
+    {
+   
+    }
+  }
+			
+			</script>
+	</script>
+	<script type="text/javascript">
+WIDGET = {FID: 'qPMfqsW0hF'}
+</script>
+	<script type="text/javascript"
+		src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+
+
+</body>
+</html>

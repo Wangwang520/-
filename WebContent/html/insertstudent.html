@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>学生信息录入</title>
+
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
+<style>
+#f2 {
+	margin-left: 50px;
+	width: 350px;
+}
+
+#sage, #sgender, #sname, #spassword {
+	background-image: url(../img/calligraphy.png);
+	background-size: 25px 25px; /*小图标的大小*/
+	background-position: 5px 4px; /*小图标在input的位置*/
+	background-repeat: no-repeat; /*背景小图标不重复*/
+	padding: 8px 10px 8px 40px; /*设置input内边距*/
+}
+</style>
+</head>
+<body style="background-color: gainsboro; color: #6f60aa;">
+	<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs">
+			<li role="presentation" id="l1"><a href="course.html"> <img
+					src="../img/log.png" width="30px" height="30px" /> &nbsp;&nbsp;
+					课表信息
+			</a></li>
+			<li role="presentation"><a href="student.html"><img
+					src="../img/colleage cap.png" width="30px" height="30px" />&nbsp;&nbsp;学生信息</a></li>
+			<li role="presentation" class="active"><a
+				href="insertstudent.html"><img src="../img/dictation.png"
+					width="30px" height="30px" />&nbsp;&nbsp;学生信息录入</a></li>
+			<li role="presentation"><a href="Insertcourse.html"><img
+					src="../img/calender.png" width="30px" height="30px" />&nbsp;&nbsp;添加选修课</a></li>
+			<button type="button" id="b2" title="退出登录" class="btn btn-group"
+				onclick="out()">
+				<span><img src="../img/p.png" width="30px" height="30px" /></span>
+			</button>
+		</ul>
+
+		<div>
+
+			<form class="form-horizontal" id="f2">
+				<div class="form-group">
+
+					<div>
+						<label for="inputEmail3">学生姓名</label> <input type="text"
+							class="form-control" id="sname" placeholder="请输入学生姓名">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3">学生性别</label>
+					<div>
+						<input type="text" class="form-control" id="sgender"
+							placeholder="请输入学生性别">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3">出生日期</label>
+					<div>
+						<input type="text" class="form-control" id="sage"
+							placeholder="请输入出生日期">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3">初始密码</label>
+					<div>
+						<input type="text" class="form-control" id="spassword"
+							placeholder="请输入初始密码">
+					</div>
+
+
+				</div>
+
+				<div class="form-group">
+					<div>
+						<button type="button" class="btn btn-group" onclick="run()">
+							<span> <img src="../img/o.png" width="30px" height="30px" />
+							</span>
+						</button>
+						&nbsp;&nbsp;&nbsp;
+						<button type="reset" class="btn btn-group">
+							<span> <img src="../img/m.png" width="30px" height="30px" />
+							</span>
+						</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+		<script>
+	function run(){
+				var name = document.getElementById("sname").value;
+	            var gender = document.getElementById("sgender").value;
+	            var age = document.getElementById("sage").value;
+	            var password = document.getElementById("spassword").value;
+				$.post("/addStudent",{"sname":name, "sgender":gender,"sage":age,"spassword":password},function(data){
+					if(data == "1"){
+						window.alert("添加成功");
+						
+						window.location.href = "student.html";
+					}else{
+						alert("添加失败");
+					}
+				})
+			}
+			
+			
+			function out()  {
+  var r=confirm("请问您是否确定退出登录？")
+  if (r==true)
+    {
+  window.location.href = "../login.html";
+    }
+  else
+    {
+   
+    }
+  }
+			
+		</script>
+		</script>
+		<script type="text/javascript">
+WIDGET = {FID: 'qPMfqsW0hF'}
+</script>
+		<script type="text/javascript"
+			src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+</body>
+</html>

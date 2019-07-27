@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>选课</title>
+<style>
+#f1 {
+	text-align: center;
+}
+</style>
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
+</head>
+<body style="background-color: gainsboro;">
+
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a id="li03"><img
+				src="../img/b.png" width="30px" height="30px" />个人中心</a></li>
+		<li role="presentation"><a id="li01"><img
+				src="../img/g.png" width="30px" height="30px" />我的课表</a></li>
+		<li role="presentation" class="active"><a id="li02"><img
+				src="../img/v.png" width="30px" height="30px" />选课</a></li>
+		<button type="button" id="b2" title="退出登录" class="btn btn-group"
+			onclick="out()">
+			<span><img src="../img/p.png" width="30px" height="30px" /></span>
+		</button>
+	</ul>
+	<div class="container-fluid ">
+		<table class="table table-hover" id="t1">
+			<tr>
+				<td><span><img src="../img/metal.png" width="30px"
+						height="30px" /> </span> 课程编号</td>
+				<td><span><img src="../img/book.png" width="30px"
+						height="30px" /> </span> 课程名称</td>
+				<td><span><img src="../img/l.png" width="30px"
+						height="30px" /> </span> 上课时间</td>
+				<td><span><img src="../img/a.png" width="30px"
+						height="30px" /> </span> 上课教室</td>
+				<td><span><img src="../img/crown.png"
+						width="30px" height="30px" /> </span> 授课教师</td>
+				<td><span><img src="../img/d.png" width="30px"
+						height="30px" /> </span></td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<script>
+		
+	var url = decodeURI(window.location.href);
+	var argsIndex = url .split("?username=");
+	var username = argsIndex[1];
+	
+	var uri="selectCourse.html?username="  + username;
+	$("#li02").attr("href",uri);
+	
+	uri="StudentCourse.html?username="  + username;
+	$("#li01").attr("href",uri);
+	uri="StudentInfo.html?username="  + username;
+	$("#li03").attr("href",uri);
+	
+	$.post("/gomiProject/courseServlet",function(data){
+		
+		if(data === null){
+			alert("没有该id或关键字！！！");
+		}
+		else{
+			var json = eval("("+ data + ")")
+			for (var i = 0; i < json.length ; i++){
+					$("#t1").append("<tr><td>"
+						+json[i].cid + "</td><td>"
+						+json[i].cname+"</td><td>"
+						+json[i].ctime+"</td><td>"
+						+json[i].caddress+"</td><td>"
+						+json[i].cteacher+"</td><td>"
+						+"<button class='btn btn-default' onclick = 'Select("+ json[i].cid+ ")'>选课</button> "
+						+"<button class='btn btn-default' onclick = 'Del("+ json[i].cid + ")'>退选</button>"
+						+"</td></tr>"
+						
+					)
+				
+			}
+			
+		}
+		
+		
+	})
+	
+	function Select(cid){
+		var url = decodeURI(window.location.href);
+		var argsIndex = url .split("?username=");
+		var username = argsIndex[1];
+		$.post("/gomiProject/SCAdd",{"cid":cid,"sid":username},function(data){
+			if(data == 1){
+				alert("成功");
+			}
+			else{
+				alert("失败")
+			}
+			
+		})
+		
+	}
+	function Del(cid){
+		var url = decodeURI(window.location.href);
+		var argsIndex = url .split("?username=");
+		var username = argsIndex[1];
+		$.post("/gomiProject/SCDelete",{"cid":cid,"sid":username},function(data){
+			
+			if(data == 1){
+				alert("成功");
+			}
+			else{
+				alert("失败")
+			}
+		})
+	}
+		
+			function out()  {
+  var r=confirm("请问您是否确定退出登录？")
+  if (r==true)
+    {
+  window.location.href = "../login.html";
+    }
+  else
+    {
+   
+    }
+  }
+			
+		
+	</script>
+
+
+	</script>
+	<script type="text/javascript">
+WIDGET = {FID: 'qPMfqsW0hF'}
+</script>
+	<script type="text/javascript"
+		src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+
+
+
+</body>
+</html>

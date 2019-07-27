@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>课程表</title>
+<style>
+#f1 {
+	text-align: center;
+}
+
+#msg {
+	background-image: url(../img/calligraphy.png);
+	background-size: 25px 25px; /*小图标的大小*/
+	background-position: 5px 4px; /*小图标在input的位置*/
+	background-repeat: no-repeat; /*背景小图标不重复*/
+	padding: 8px 10px 8px 40px; /*设置input内边距*/
+}
+</style>
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
+
+
+</head>
+<body style="background-color: gainsboro;">
+	<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<ul class="nav nav-tabs" id="u1">
+		<li role="presentation" class="active" id="l1"><a
+			href="course.html"> <img src="../img/log.png" width="30px"
+				height="30px" /> &nbsp;&nbsp; 课表信息
+		</a></li>
+		<li role="presentation"><a href="student.html"><img
+				src="../img/colleage cap.png" width="30px" height="30px" />&nbsp;&nbsp;学生信息</a></li>
+		<li role="presentation"><a href="insertstudent.html"><img
+				src="../img/dictation.png" width="30px" height="30px" />&nbsp;&nbsp;学生信息录入</a></li>
+		<li role="presentation"><a href="Insertcourse.html"><img
+				src="../img/calender.png" width="30px" height="30px" />&nbsp;&nbsp;添加选修课</a></li>
+		<form class="form-inline " id="f1">
+			<div class="form-group">
+
+				<div class="input-group">
+					<label class="input-group-addon">查询信息 <!--   <span><img src="../img/calligraphy.png"  width="20px" height="20px"/> </span>-->
+					</label> <input type="text" class="form-control" id="msg"
+						placeholder="请输入课程名称或关键字">
+
+				</div>
+			</div>
+			<button type="button" onclick="mhSearch()" class="btn btn-group "
+				id="b1">
+				<span> <img src="../img/search.png" width="20px"
+					height="20px" />
+				</span>
+
+			</button>
+			<button type="button" id="b2" title="退出登录" class="btn btn-group"
+				onclick="out()">
+				<span><img src="../img/p.png" width="30px" height="30px" /></span>
+			</button>
+	</ul>
+	<div class="container-fluid ">
+		<table class="table table-hover" id="t1">
+			<tr>
+				<td><span><img src="../img/metal.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;课程编号</td>
+				<td><span><img src="../img/book.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;课程名称</td>
+				<td><span><img src="../img/l.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;上课时间</td>
+				<td><span><img src="../img/a.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;上课教室</td>
+				<td><span><img src="../img/crown.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;授课教师</td>
+				<td><span><img src="../img/d.png" width="30px"
+						height="30px" /> </span></td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+
+	<script>
+				
+				
+				$.post("/gomiProject/courseServlet", function(data) {
+				var json = eval("(" + data + ")");
+				for(var i = 0; i < json.length; i++) {
+
+					$("#t1").append("<tr><td>" +
+						json[i].cid + "</td><td>" +
+						json[i].cname + "</td><td>" +
+						json[i].ctime + "</td><td>" +
+						json[i].caddress +"</td><td>"+
+						json[i].cteacher + "</td><td>" + 
+						"<a onclick='sel(" + json[i].cid + ")' >选课情况<a></td></tr>");
+				}
+
+				});
+				function sel(cid){
+					
+				$.post("/gomiProject/courseByIdServlet",{"id":cid},function(data){
+					
+					var uri = "Scourse.html?cid=" + cid;
+					window.location.href = uri;
+				//	window.open("Scourse.html");
+				});
+				
+				
+				}
+				
+					
+				function mhSearch(){
+					
+				$("#t1 tr:not(:first)").empty();
+					var msg = document.getElementById("msg").value;
+					//alert(msg);
+					$.post("/gomiProject/findCourse",{"msg":msg},function(data){
+					//	alert(data);
+						var json = eval("(" + data + ")");
+						
+					for(var i = 0; i < json.length; i++) {
+						$("#t1").append("<tr><td>" +
+						json[i].cid + "</td><td>" +
+						json[i].cname + "</td><td>" +
+						json[i].ctime + "</td><td>" +
+						json[i].caddress +"</td><td>"+
+						json[i].cteacher + "</td><td>" + 
+						"<a onclick='sel(" + json[i].cid + ")' >选课情况<a></td></tr>");
+					}
+						
+         });
+			}
+			function out()  {
+  var r=confirm("请问您是否确定退出登录？")
+  if (r==true)
+    {
+  window.location.href = "../login.html";
+    }
+  else
+    {
+   
+    }
+  }
+				
+			 </script>
+
+	</script>
+	<script type="text/javascript">
+WIDGET = {FID: 'qPMfqsW0hF'}
+</script>
+	<script type="text/javascript"
+		src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+
+
+</body>
+</html>

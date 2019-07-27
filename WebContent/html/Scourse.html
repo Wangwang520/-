@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>选修课程学生信息</title>
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
+
+</head>
+<body style="background-color: gainsboro;">
+	<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+	<div class="container-fluid">
+		<table class="table table-hover" id="t1">
+			<tr>
+				<td><span><img src="../img/metal.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;课程编号</td>
+				<td><span><img src="../img/book.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;课程名称</td>
+				<td><span><img src="../img/s.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;学生学号</td>
+				<td><span><img src="../img/r.png" width="30px"
+						height="30px" /> </span>&nbsp;&nbsp;学生姓名</td>
+
+			</tr>
+		</table>
+	</div>
+	<script>
+		var url = decodeURI(window.location.href);
+		var scourse = url.split("?cid=");
+		var cid = scourse[1];
+	$.post("/gomiProject/courseByIdServlet",{"id": cid},function(data){
+		
+		
+			var json = eval("("+ data + ")")
+
+			for (var i = 0; i < json.length ; i++){
+					$("#t1").append("<tr><td>"
+						+json[i].cid + "</td><td>"
+						+json[i].cname+"</td><td>"
+						+json[i].sid+"</td><td>"
+						+json[i].sname+"</td><tr>"
+						
+						
+					)
+				
+			
+			
+		}
+		
+		
+	})
+		</script>
+
+</body>
+</html>
